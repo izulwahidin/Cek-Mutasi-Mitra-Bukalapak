@@ -1,4 +1,5 @@
 <?php
+
 class MITRABUKALAPAK{
 	public function __construct($Identity,$refresh_token){
 		$this->_Identity = $Identity;
@@ -43,15 +44,22 @@ class MITRABUKALAPAK{
 		if(isset($result['error'])) return false; //throw new Exception($result['error']['message']);
 		
 
-		if(!is_null(@$result['refresh_token'])) file_put_contents('./'."bl_refresh_token_".$this->_Identity, $result['refresh_token']);
-		if(!is_null(@$result['access_token'])) file_put_contents('./'."bl_access_token_".$this->_Identity, $result['access_token']);
+		if(!is_null(@$result['refresh_token'])) file_put_contents("bl_refresh_token_".$this->_Identity, $result['refresh_token']);
+		if(!is_null(@$result['access_token'])) file_put_contents("bl_access_token_".$this->_Identity, $result['access_token']);
 
 
 		return $result['access_token'];
 	}
 
 	private function getData(){
-		return $this->request(false);
+		retry:
+		$result = $this->request(false);
+		if(isset($result['errors'])){
+			unlink("bl_access_token_".$this->_Identity);
+			$this->generateToken();
+			goto retry;
+		}
+		return $result;
 	}
 
 	public function mutasiAll(){
