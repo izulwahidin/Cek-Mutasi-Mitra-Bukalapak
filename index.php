@@ -7,4 +7,7 @@ $bl = new MITRABUKALAPAK(
 );
 
 
-print_r($bl->mutasi());
+// print_r($bl->mutasiAll());
+// print_r($bl->mutasiCredits());
+print_r($bl->mutasiWallet());
+// print_r($bl->mutasiDana());
