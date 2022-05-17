@@ -1,3 +1,4 @@
+<?php
 class MITRABUKALAPAK{
 	public function __construct($Identity,$refresh_token){
 		$this->_Identity = $Identity;
