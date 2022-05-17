@@ -56,6 +56,6 @@ class MITRABUKALAPAK{
 
 	public function mutasi(){
 		$data = $this->getData();
-		return $data;
+		return json_encode($data,JSON_PRETTY_PRINT);
 	}
 }
